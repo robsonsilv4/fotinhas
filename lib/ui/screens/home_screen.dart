@@ -10,6 +10,21 @@ class HomeScreen extends StatelessWidget {
     'fco_gerlison',
   ];
 
+  final _bottomBarItems = [
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home),
+      title: Text('Inicio'),
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.add),
+      title: Text('Adicionar'),
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.search),
+      title: Text('Procurar'),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +53,9 @@ class HomeScreen extends StatelessWidget {
           _buildStories(),
           _buildFeed(),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: _bottomBarItems,
       ),
     );
   }
