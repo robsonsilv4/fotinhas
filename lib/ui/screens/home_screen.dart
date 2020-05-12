@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  final users = [
+    'robson_silva',
+    'zarathon_maia',
+    'siqueira_junior',
+    'mikael_matos',
+    'emerson_vieira',
+    'fco_gerlison',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,17 +48,21 @@ class HomeScreen extends StatelessWidget {
       color: Colors.grey.shade200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 10,
+        itemCount: users.length,
         itemBuilder: (context, index) {
+          final user = users.elementAt(index);
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: <Widget>[
                 CircleAvatar(
                   radius: 35.0,
+                  backgroundImage: NetworkImage(
+                    'https://picsum.photos/150',
+                  ),
                 ),
                 Text(
-                  'usuario_${index + 1}',
+                  user,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
@@ -67,18 +80,23 @@ class HomeScreen extends StatelessWidget {
   Widget _buildFeed() {
     return Expanded(
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: users.length,
         itemBuilder: (context, index) {
+          final user = users.elementAt(index);
           return Column(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: <Widget>[
-                    CircleAvatar(),
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://picsum.photos/150',
+                      ),
+                    ),
                     SizedBox(width: 10.0),
                     Text(
-                      'usuario_${index + 1}',
+                      user,
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
