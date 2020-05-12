@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../data/models/user.dart';
 import '../../data/providers/memory_provider.dart';
+import '../../data/repositories/users_repository.dart';
 
 class HomeScreen extends StatelessWidget {
-  final users = MemoryProvider().getUsers();
+  final repository = UsersRepository();
 
   final _bottomBarItems = [
     BottomNavigationBarItem(
@@ -62,31 +64,42 @@ class HomeScreen extends StatelessWidget {
     return Container(
       height: 120.0,
       color: Colors.grey.shade200,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: users.length,
-        itemBuilder: (context, index) {
-          final user = users.elementAt(index);
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: <Widget>[
-                CircleAvatar(
-                  radius: 35.0,
-                  backgroundImage: NetworkImage(
-                    'https://picsum.photos/150',
+      child: FutureBuilder(
+        future: repository.getUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final List<User> users = snapshot.data;
+            return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                final user = users.elementAt(index);
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: <Widget>[
+                      CircleAvatar(
+                        radius: 35.0,
+                        backgroundImage: NetworkImage(
+                          user.avatar,
+                        ),
+                      ),
+                      Text(
+                        user.username,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Text(
-                  user.username,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                ),
-              ],
-            ),
+                );
+              },
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(),
           );
         },
       ),
@@ -94,6 +107,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildFeed() {
+    final users = MemoryProvider().getUsers();
     return Expanded(
       child: ListView.builder(
         itemCount: users.length,
