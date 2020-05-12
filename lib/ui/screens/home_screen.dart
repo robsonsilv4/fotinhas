@@ -5,7 +5,9 @@ import '../../data/providers/memory_provider.dart';
 import '../../data/repositories/users_repository.dart';
 
 class HomeScreen extends StatelessWidget {
-  final repository = UsersRepository();
+  final UsersRepository repository;
+
+  HomeScreen({@required this.repository});
 
   final _bottomBarItems = [
     BottomNavigationBarItem(

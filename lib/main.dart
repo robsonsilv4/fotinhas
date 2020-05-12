@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fotinhas/ui/screens/home_screen.dart';
+
+import 'data/providers/remote_provider.dart';
+import 'data/repositories/users_repository.dart';
+import 'ui/screens/home_screen.dart';
 
 void main() {
   runApp(App());
@@ -16,7 +19,11 @@ class App extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
-        body: HomeScreen(),
+        body: HomeScreen(
+          repository: UsersRepository(
+            RemoteProvider(),
+          ),
+        ),
       ),
     );
   }

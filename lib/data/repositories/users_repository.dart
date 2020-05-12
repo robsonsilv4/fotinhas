@@ -2,7 +2,9 @@ import '../models/user.dart';
 import '../providers/remote_provider.dart';
 
 class UsersRepository {
-  final remoteProvider = RemoteProvider();
+  final RemoteProvider remoteProvider;
+
+  UsersRepository(this.remoteProvider);
 
   Future<List<User>> getUsers() async {
     final response = await remoteProvider.fetchUsers();
