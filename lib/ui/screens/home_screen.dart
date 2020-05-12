@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../data/providers/memory_provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  final users = MemoryProvider().getAllUsers();
+  final users = MemoryProvider().getUsers();
 
   final _bottomBarItems = [
     BottomNavigationBarItem(

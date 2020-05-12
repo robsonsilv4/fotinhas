@@ -1,7 +1,7 @@
 import '../models/user.dart';
 
 class MemoryProvider {
-  List<User> getAllUsers() {
+  List<User> getUsers() {
     return [
       User(firstName: 'Robson', lastName: 'Silva'),
       User(firstName: 'Zarathon', lastName: 'Maia'),
