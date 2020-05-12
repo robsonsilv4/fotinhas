@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'bloc/users_bloc.dart';
 import 'data/providers/remote_provider.dart';
 import 'data/repositories/users_repository.dart';
 import 'ui/screens/home_screen.dart';
@@ -20,8 +21,10 @@ class App extends StatelessWidget {
       ),
       home: Scaffold(
         body: HomeScreen(
-          repository: UsersRepository(
-            RemoteProvider(),
+          bloc: UsersBloc(
+            UsersRepository(
+              RemoteProvider(),
+            ),
           ),
         ),
       ),

@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 
+import '../../bloc/users_bloc.dart';
 import '../../data/models/user.dart';
-import '../../data/providers/memory_provider.dart';
-import '../../data/repositories/users_repository.dart';
 
-class HomeScreen extends StatelessWidget {
-  final UsersRepository repository;
+class HomeScreen extends StatefulWidget {
+  final UsersBloc bloc;
 
-  HomeScreen({@required this.repository});
+  HomeScreen({@required this.bloc});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    widget.bloc.fetchUsers();
+  }
 
   final _bottomBarItems = [
     BottomNavigationBarItem(
@@ -62,15 +72,21 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  @override
+  void dispose() {
+    widget.bloc.dispose();
+    super.dispose();
+  }
+
   Widget _buildStories() {
     return Container(
       height: 120.0,
       color: Colors.grey.shade200,
-      child: FutureBuilder(
-        future: repository.getUsers(),
+      child: StreamBuilder(
+        stream: widget.bloc.users,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final List<User> users = snapshot.data;
+            final users = snapshot.data;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: users.length,
@@ -109,40 +125,50 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildFeed() {
-    final users = MemoryProvider().getUsers();
     return Expanded(
-      child: ListView.builder(
-        itemCount: users.length,
-        itemBuilder: (context, index) {
-          final user = users.elementAt(index);
-          return Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
+      child: StreamBuilder(
+        stream: widget.bloc.users,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final List<User> users = snapshot.data;
+            return ListView.builder(
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                final user = users.elementAt(index);
+                return Column(
                   children: <Widget>[
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        'https://picsum.photos/150',
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: <Widget>[
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              user.avatar,
+                            ),
+                          ),
+                          SizedBox(width: 10.0),
+                          Text(
+                            user.username,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(width: 10.0),
-                    Text(
-                      user.username,
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Image(
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width,
+                      image: NetworkImage('https://picsum.photos/300'),
                     ),
                   ],
-                ),
-              ),
-              Image(
-                fit: BoxFit.cover,
-                width: MediaQuery.of(context).size.width,
-                image: NetworkImage('https://picsum.photos/300'),
-              ),
-            ],
+                );
+              },
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(),
           );
         },
       ),
