@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fotinhas/ui/screens/home_screen.dart';
 
 void main() {
   runApp(App());
@@ -11,11 +12,11 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Fotinhas',
       theme: ThemeData(
-        primarySwatch: Colors.white,
+        primarySwatch: Colors.purple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
-        body: Container(),
+        body: HomeScreen(),
       ),
     );
   }
