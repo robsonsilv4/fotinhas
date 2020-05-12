@@ -13,5 +13,13 @@ class User {
     this.avatar,
   });
 
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    email = json['email'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
+    avatar = json['avatar'];
+  }
+
   String get username => '${this.firstName}_${this.lastName}'.toLowerCase();
 }
