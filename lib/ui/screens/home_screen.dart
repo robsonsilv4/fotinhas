@@ -87,7 +87,11 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Placeholder(),
+              Image(
+                fit: BoxFit.cover,
+                width: MediaQuery.of(context).size.width,
+                image: NetworkImage('https://picsum.photos/300'),
+              ),
             ],
           );
         },
