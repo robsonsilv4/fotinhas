@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../data/models/user.dart';
+import '../../shared/constants.dart';
 
 class Feed extends StatelessWidget {
   final List<User> users;
@@ -42,7 +43,7 @@ class Feed extends StatelessWidget {
             Image(
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width,
-              image: NetworkImage('https://picsum.photos/300'),
+              image: NetworkImage(Constants.imagesURL),
             ),
           ],
         );
