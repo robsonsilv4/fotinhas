@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../data/providers/memory_provider.dart';
+
 class HomeScreen extends StatelessWidget {
-  final users = [
-    'robson_silva',
-    'zarathon_maia',
-    'siqueira_junior',
-    'mikael_matos',
-    'emerson_vieira',
-    'fco_gerlison',
-  ];
+  final users = MemoryProvider().getAllUsers();
 
   final _bottomBarItems = [
     BottomNavigationBarItem(
@@ -83,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  user,
+                  user.username,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
@@ -117,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      user,
+                      user.username,
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
