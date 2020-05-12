@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       title: Text('Inicio'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.add),
+      icon: Icon(Icons.add_box),
       title: Text('Adicionar'),
     ),
     BottomNavigationBarItem(
@@ -55,6 +55,9 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        iconSize: 36.0,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         items: _bottomBarItems,
       ),
     );
