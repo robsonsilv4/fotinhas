@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../bloc/users_bloc.dart';
 import '../../data/models/user.dart';
+import '../widgets/feed.dart';
+import '../widgets/loading.dart';
+import '../widgets/stories.dart';
 
 class HomeScreen extends StatefulWidget {
   final UsersBloc bloc;
@@ -87,38 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final users = snapshot.data;
-            return ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                final user = users.elementAt(index);
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: <Widget>[
-                      CircleAvatar(
-                        radius: 35.0,
-                        backgroundImage: NetworkImage(
-                          user.avatar,
-                        ),
-                      ),
-                      Text(
-                        user.username,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
+            return Stories(users: users);
           }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return Loading();
         },
       ),
     );
@@ -131,45 +105,9 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final List<User> users = snapshot.data;
-            return ListView.builder(
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                final user = users.elementAt(index);
-                return Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: <Widget>[
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              user.avatar,
-                            ),
-                          ),
-                          SizedBox(width: 10.0),
-                          Text(
-                            user.username,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Image(
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width,
-                      image: NetworkImage('https://picsum.photos/300'),
-                    ),
-                  ],
-                );
-              },
-            );
+            return Feed(users: users);
           }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return Loading();
         },
       ),
     );
